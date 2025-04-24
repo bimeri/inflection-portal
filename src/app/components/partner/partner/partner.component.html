@@ -1,0 +1,36 @@
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="!loading && !error">
+  <div class="table-controls">
+    <button (click)="onMessageClick()">Message Partners</button>
+    <button (click)="onExportClick()">Export List</button>
+  </div>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Partner Name</th>
+      <th>Type</th>
+      <th>Conversions</th>
+      <th>Commissions</th>
+      <th>Gross Sales</th>
+      <th>Contract</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (partner of partners; track partner.id) {
+        <tr>
+          <td>{{ partner.partnerName }}</td>
+          <td>{{ partner.partnerType }}</td>
+          <td>{{ partner.conversions }}</td>
+          <td>${{ partner.commissions || 0 }}</td>
+          <td>${{ partner.grosssales || 0 }}</td>
+          <td>{{ partner.contract }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+<!--  <pagination-controls (pageChange)="page = $event"></pagination-controls>-->
+</div>
