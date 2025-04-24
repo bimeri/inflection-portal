@@ -33,7 +33,7 @@
         <span>Dashboard</span>
       </div>
 
-      <div class="flex ml-[14%] items-center mt-3 bg-white size-10 grow-3 p-2 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+      <div class="flex ml-[13%] items-center mt-3 bg-white size-10 grow-4 p-2 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
         <fa-icon [icon]="faCalendarAlt" class="text-gray-400 mr-2"></fa-icon>
         @if (displayDate) {
           <span class="flex-grow text-gray-700 text-[12px]">
@@ -54,10 +54,10 @@
           <button class="left-side flex items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
             Choose Columns <span class="relative -top-0.5" nz-icon nzType="table" nzTheme="outline"></span>
           </button>
-          <button class="left-side items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
+          <button (click)="onMessageClick()" class="left-side items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
             Message Partners <span class="relative -top-0.5" nz-icon nzType="mail" nzTheme="outline"></span>
           </button>
-          <button class="left-side items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
+          <button (click)="onExportClick()" class="left-side items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
             Export List <span class="relative -top-0.5" nz-icon nzType="download"></span>
           </button>
         </div>
@@ -67,9 +67,10 @@
   <nz-content class="outer-content">
     <nz-layout class="inner-layout">
       <nz-sider nzWidth="200px" nzTheme="light">
-        <ul class="sider-menu">
-          <div class="updated-partner-details-desktop-group5043">
-            <span class="updated-partner-details-desktop-text106">Partners</span>
+        <ul class="sider-menu left-0">
+          <div class="flex items-left justify-left">
+            <span nz-icon nzType="user" nzTheme="outline" class="mr-3 left-menu"></span>
+            <span class="left-menu">Partners</span>
           </div>
         </ul>
       </nz-sider>

@@ -38,14 +38,6 @@ export class PartnerComponent implements OnInit, OnDestroy{
     });
   }
 
-  onMessageClick(): void {
-    alert('Message Partners clicked');
-  }
-
-  onExportClick(): void {
-    alert('Export List clicked');
-  }
-
   ngOnInit(): void {
     this.getPartners();
   }

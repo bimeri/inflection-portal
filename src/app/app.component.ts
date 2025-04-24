@@ -7,7 +7,7 @@ import {
   NzLayoutComponent,
   NzSiderComponent
 } from "ng-zorro-antd/layout";
-import {faCalendarAlt, faCaretDown, faHome, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faCalendarAlt, faCaretDown, faHome, faUser, faUserAlt} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {NzDatePickerModule, NzRangePickerComponent} from "ng-zorro-antd/date-picker";
 import {FormsModule} from "@angular/forms";
@@ -37,13 +37,14 @@ import {NzIconDirective} from "ng-zorro-antd/icon";
 })
 export class AppComponent {
   @ViewChild(NzRangePickerComponent) rangePicker!: NzRangePickerComponent;
+  date = null;
   size: NzButtonSize = 'default';
   title = 'inflection-portal';
-  date = null;
   private userIcon = faUser;
-  protected readonly faUser = faUser;
-  protected readonly caretDown = faCaretDown;
   protected readonly faHome = faHome;
+  protected readonly faUser = faUserAlt;
+  protected readonly caretDown = faCaretDown;
+  protected readonly faCalendarAlt = faCalendarAlt;
   displayDate: string = ' July 6, 2022 - Aug 5, 2022';
 
   constructor(private datePipe: DatePipe) {
@@ -65,5 +66,11 @@ export class AppComponent {
 
   }
 
-  protected readonly faCalendarAlt = faCalendarAlt;
+  onMessageClick(): void {
+    alert('Message Partners clicked');
+  }
+
+  onExportClick(): void {
+    alert('Export List clicked');
+  }
 }
