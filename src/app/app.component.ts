@@ -6,12 +6,12 @@ import {
 } from "ng-zorro-antd/layout";
 import {FaIconComponent, IconDefinition} from "@fortawesome/angular-fontawesome";
 import {faCaretDown, faHome} from "@fortawesome/free-solid-svg-icons";
-import {Component, HostListener, OnDestroy} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {SharedService} from "./services/shared/shared.service";
-import {NgForOf, NgIf, NgTemplateOutlet} from '@angular/common';
+import {NgClass, NgForOf, NgIf, NgTemplateOutlet} from '@angular/common';
 import {NzIconDirective} from "ng-zorro-antd/icon";
-import { RouterOutlet } from '@angular/router';
-import {Subscription} from "rxjs";
+import {NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {filter, Subscription} from "rxjs";
 import {animate, keyframes, state, style, transition, trigger} from "@angular/animations";
 import {MenuItem} from "./model/partner";
 import {TranslatePipe} from "./pipes/translate.pipe";
@@ -32,6 +32,9 @@ import {TranslationService} from "./services/translation/translation.service";
     RouterOutlet,
     NgIf,
     NgForOf,
+    RouterLink,
+    RouterLinkActive,
+    NgClass,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -56,7 +59,7 @@ import {TranslationService} from "./services/translation/translation.service";
     ])
   ]
 })
-export class AppComponent implements OnDestroy{
+export class AppComponent implements OnInit, OnDestroy{
   protected logo: string = 'assets/images/vector1264-y7so.svg';
   protected readonly caretDown: IconDefinition = faCaretDown;
   protected readonly homeIcon: IconDefinition = faHome;
@@ -65,18 +68,19 @@ export class AppComponent implements OnDestroy{
   protected mobileWidth: number = 985;
   protected windowSize: number = 0;
   protected hoveredIndex: number | null = null;
+  protected currentUrl: string = '';
   protected menuItems: MenuItem[] = [
-    { label: this.tService.translateMessage('dashboard'), icon: 'home'},
-    { label: this.tService.translateMessage('partners'), icon: 'user' },
-    { label: this.tService.translateMessage('approvals'), icon: 'check-square'},
-    { label: this.tService.translateMessage('messaging'), icon: 'mail' },
-    { label: this.tService.translateMessage('marketing_resources'), icon: 'shopping' },
-    { label: this.tService.translateMessage('files'), icon: 'file-text'},
-    { label: this.tService.translateMessage('conversion'), icon: 'transaction' },
-    { label: this.tService.translateMessage('admin'), icon: 'user-switch' }
+    { label: this.tService.translateMessage('dashboard'), icon: 'home', link: ''},
+    { label: this.tService.translateMessage('partners'), icon: 'user', link: '/partners' },
+    { label: this.tService.translateMessage('approvals'), icon: 'check-square', link: '/approvals'},
+    { label: this.tService.translateMessage('messaging'), icon: 'mail', link: '/messaging' },
+    { label: this.tService.translateMessage('marketing_resources'), icon: 'shopping', link: '/marketing_resources' },
+    { label: this.tService.translateMessage('files'), icon: 'file-text', link: '/files'},
+    { label: this.tService.translateMessage('conversion'), icon: 'transaction', link: '/conversion' },
+    { label: this.tService.translateMessage('admin'), icon: 'user-switch', link: '/admin' }
   ];
 
-  constructor(private sharedService: SharedService, private tService: TranslationService) {
+  constructor(private sharedService: SharedService, private tService: TranslationService, private router: Router) {
     this.subscription.add(
       this.sharedService.windowWidth$.subscribe((width: number) => {
           this.windowSize = width;
@@ -101,5 +105,13 @@ export class AppComponent implements OnDestroy{
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  ngOnInit(): void {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.currentUrl = event.urlAfterRedirects;
+      });
   }
 }

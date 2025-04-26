@@ -97,13 +97,14 @@ nz-footer {
   font-family: 'Poppins', serif;
   border-color: transparent !important;
 }
-.active-item{
+
+.active {
+  border-left: 4px solid #FF13B8;
   background-color: #031050;
-  font-family: 'Poppins', serif;
+  color: #ffffff !important;
 }
-.text-color {
-  color: $text-color;
-  font-family: 'Poppins', serif;
+.active-icon {
+  color: #FF13B8 !important;
 }
 .overlay {
   position: fixed;

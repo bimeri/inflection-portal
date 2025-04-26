@@ -4,18 +4,29 @@ import {ErrorResponseDto} from "../../model/ErrorResponseDto";
 import {ToastService} from "../notification/toast.service";
 import {TranslationService} from "../translation/translation.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Partner} from "../../model/partner";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
   private windowWidthSubject: BehaviorSubject<number> = new BehaviorSubject<number>(window.innerWidth);
+  // @ts-ignore
+  private allPartners: BehaviorSubject<Partner[]> = new BehaviorSubject<Partner[]>();
   public windowWidth$: Observable<number> = this.windowWidthSubject.asObservable();
 
   constructor(private toastService: ToastService, private translationService: TranslationService) { }
 
   setWindowWidthAndHeight(width: number, height: number): void {
     this.windowWidthSubject.next(width);
+  }
+
+  public setPartner(partner: Partner[]): void {
+    this.allPartners.next(partner);
+  }
+
+  public getAllPartners(): Partner[] {
+    return this.allPartners.value;
   }
 
   public buildErrorResponse(error: any): ErrorResponseDto | any {

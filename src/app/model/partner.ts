@@ -11,4 +11,5 @@ export interface Partner {
 export interface MenuItem {
   label: string;
   icon: string;
+  link: string;
 }

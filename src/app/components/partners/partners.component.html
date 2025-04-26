@@ -1,0 +1,15 @@
+<div class="partner-container">
+  <h2 class="partner-header left-text">List of Partners</h2>
+
+  <nz-spin [nzSpinning]="loading" nzTip="Loading, please wait...">
+    <div class="partner-list">
+      <div class="partner-item" *ngFor="let partner of partners">
+        <i nz-icon
+           nzType="user" [classList]=""
+           nzTheme="outline"
+           class="partner-icon text-gray-600 bg-gray-100 circle p-3 hover:bg-gray-200"></i>
+        <span class="partner-name">{{ partner.partnerName }}</span>
+      </div>
+    </div>
+  </nz-spin>
+</div>

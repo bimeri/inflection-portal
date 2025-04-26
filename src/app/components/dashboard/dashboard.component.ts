@@ -24,7 +24,7 @@ import {Subscription} from "rxjs";
 import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
 
 @Component({
-  selector: 'app-partner',
+  selector: 'app-dashboard',
   standalone: true,
   imports: [
     SkeletonLoaderComponent,
@@ -47,8 +47,8 @@ import {animate, query, stagger, style, transition, trigger} from "@angular/anim
     CurrencyPipe,
     DecimalPipe,
   ],
-  templateUrl: './partner.component.html',
-  styleUrl: './partner.component.scss',
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss',
   encapsulation: ViewEncapsulation.None,
   providers: [DatePipe],
   animations: [
@@ -68,7 +68,7 @@ import {animate, query, stagger, style, transition, trigger} from "@angular/anim
     ])
   ]
 })
-export class PartnerComponent implements OnInit, OnDestroy{
+export class DashboardComponent implements OnInit, OnDestroy{
   protected listOfColumn: {title: string, compare: any}[] = constants.LIST_OF_COLUMNS;
   @ViewChild(NzRangePickerComponent) rangePicker!: NzRangePickerComponent;
   protected globalError: ErrorResponseDto = new ErrorResponseDto();
@@ -205,10 +205,18 @@ export class PartnerComponent implements OnInit, OnDestroy{
   private getPartners() {
     this.loading = true;
     this.error = '';
+    const allPartners: Partner[] = this.sharedService.getAllPartners();
+    if (allPartners && allPartners.length > 0) {
+      this.partners = allPartners;
+      this.AllData = allPartners;
+      this.loading = false;
+      return;
+    }
     this.subscription = this.partnerService.getPartners().subscribe({
       next: (data: Partner[]) => {
         this.partners = data;
         this.AllData = data;
+        this.sharedService.setPartner(data);
         this.loading = false;
       },
       error: (error: Error) => {

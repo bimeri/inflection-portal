@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 @import 'ngx-toastr/toastr';
+$text-color: #031050;
 
 @font-face {
   font-family: 'Poppins';
@@ -20,6 +21,15 @@ body {
 }
 
 .left-text {
-  color: #031050;
+  color: $text-color;
   font-family: 'Poppins', serif;
+}
+
+.font{
+  font-family: 'Poppins', serif;
+}
+.circle {
+  clip-path: circle() !important;
+  color: $text-color;
+  background: #c8cbe4;
 }

@@ -54,6 +54,8 @@ https://github.com/bimeri/inflection-portal.git
 - added modal to display application export supported type 
 - added angular routing, although for the moment only the home page and not-found page are accessible
 - implemented a page not found, if user unintentionally type a different url
+- implemented the list all partner page and added other pages and route configuration, but i did not implement the pages because the design is not available
+- using angular behaviour subject to store and share content
 
 ## Technologies Used
 

@@ -5,14 +5,18 @@ table {
   width: 100%;
   border-collapse: collapse;
   th, td {
-    padding: 0.75rem;
-    border: transparent;
+    padding: 0.75rem 0.75rem 0.75rem 1rem;
+    border: none;
+    text-align: left;
+    font-family: 'Poppins', serif !important;
   }
   thead, th {
     background-color: $text-color !important;
     color: white !important;
     font-family: 'Poppins', serif !important;
-    text-align: center !important;
+    text-align: left !important;
+    padding-left: 3px;
+    margin-left: 5px !important;
   }
   tr:nth-child(even) {
     background-color: #F4F7FE !important;
@@ -28,9 +32,10 @@ table {
     tr > td {
       padding: 5px !important;
       border: none !important;
+      padding-left: 1.5rem !important;
     }
     tr {
-      text-align: center;
+      text-align: left;
       height: 5px !important;
     }
   }
@@ -88,11 +93,6 @@ table {
 .ant-btn-round.ant-btn-sm{
   height: 30px !important;
   padding: 0 7px !important;
-}
-.circle {
-  clip-path: circle() !important;
-  color: $text-color;
-  background: #c8cbe4;
 }
 .ant-table-footer, .ant-table-thead > tr > th {
   background: #ffffff;

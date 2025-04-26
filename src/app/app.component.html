@@ -1,6 +1,6 @@
 <nz-layout>
   @if (windowSize > mobileWidth) {
-    <nz-sider  [nzWidth]="215">
+    <nz-sider  [nzWidth]="220">
       <span *ngTemplateOutlet="sideMenu"></span>
     </nz-sider>
   } @else {
@@ -8,7 +8,7 @@
       <div class="overlay" *ngIf="!isCollapsed" (click)="closeDrawer()"></div>
       <nz-layout class="layout">
           <nz-sider
-            [nzWidth]="215"
+            [nzWidth]="220"
             nzCollapsible
             nzBreakpoint="lg"
             [(nzCollapsed)]="isCollapsed"
@@ -58,16 +58,14 @@
 
   <ul class="left-menu pt-5">
     @for (item of menuItems; track item; let i = $index) {
-      <li>
-        <div (mouseenter)="setHover(i)"
-             (mouseleave)="setHover(null)"
-             [class]="i == 0 ? 'active-item text-white border-l-4 border-pink-500':'text-color'"
-             class="flex items-center gap-3 p-3">
+      <li (click)="isCollapsed = !isCollapsed">
+        <div (mouseenter)="setHover(i)" (mouseleave)="setHover(null)" [routerLink]="item.link" routerLinkActive="active"
+             [routerLinkActiveOptions]="{ exact: true }" class="flex items-center gap-3 p-3 font">
           <div [@vibrate]="hoveredIndex === i ? 'vibrating' : 'idle'" class="icon-wrapper w-6 flex justify-center">
             @if(i === 0) {
-              <fa-icon class="text-pink-500 text-xl" [icon]="homeIcon"></fa-icon>
+              <fa-icon [icon]="homeIcon" [ngClass]="{'text-pink-500': currentUrl === '/' || currentUrl === '/home'}" class="text-xl"></fa-icon>
             } @else {
-              <span [nzType]="item.icon" nz-icon nzTheme="outline" class="text-xl"></span>
+              <span [nzType]="item.icon" nz-icon nzTheme="outline" [ngClass]="{'active-icon': currentUrl === item.link}" class="text-xl"></span>
             }
           </div>
           <span>{{ item.label }}</span>
@@ -75,4 +73,5 @@
       </li>
     }
   </ul>
+
 </ng-template>
