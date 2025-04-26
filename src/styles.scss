@@ -2,7 +2,6 @@
 @import "tailwindcss";
 @import 'ngx-toastr/toastr';
 
-
 @font-face {
   font-family: 'Poppins';
   src: url('/assets/fonts/Poppins/Poppins-Light.ttf') format('truetype');
@@ -18,4 +17,9 @@ body {
   background: #ffffff !important;
   position: relative;
   height: 100%;
+}
+
+.left-text {
+  color: #031050;
+  font-family: 'Poppins', serif;
 }

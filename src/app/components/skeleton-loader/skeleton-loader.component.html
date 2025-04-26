@@ -1,0 +1,23 @@
+<div class="max-w-full sm:max-w-[900px] mx-auto">
+  <nz-skeleton
+    [nzActive]="true"
+    [nzTitle]="false"
+    [nzParagraph]="{ rows: 1, width: '' }"
+    class="mb-4">
+  </nz-skeleton>
+
+  <div class="space-y-4">
+    @for (i of [].constructor(5); track i) {
+      <div class="flex justify-between gap-3 flex-wrap sm:flex-nowrap">
+        @for (j of [].constructor(7); track j) {
+          <nz-skeleton-element
+            nzType="input"
+            [nzActive]="true"
+            [nzSize]="'small'"
+            class="w-[12%] min-w-[40px] flex-1 sm:flex-none"
+          ></nz-skeleton-element>
+        }
+      </div>
+    }
+  </div>
+</div>

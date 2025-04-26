@@ -1,0 +1,182 @@
+<div *ngIf="loading" class="p-10 mt-10 text-2xl font-light">
+  <app-skeleton-loader></app-skeleton-loader>
+</div>
+<div class="flex text-center p-5 mt-10 text-2xl font-light bg-red-100 rounded-lg justify-center" *ngIf="error">
+ {{'error_message' | translate: error}}
+</div>
+
+<div [class]="mobileWidth > windowSize ? 'mt-10' : ''" class="overflow-x-auto">
+  <div *ngIf="!loading && !error" nz-row class="mt-4 ml-5">
+    <ng-container *ngIf="mobileWidth < windowSize">
+      <ng-container *ngTemplateOutlet="listMenu"></ng-container>
+    </ng-container>
+  </div>
+  <div *ngIf="!loading && !error" class="rounded-lg overflow-hidden p-6">
+    <div *ngIf="mobileWidth > windowSize" class="flex justify-end mb-4">
+      <span
+        nz-popover
+        nz-icon
+        nzPopoverTrigger="click"
+        [nzPopoverContent]="listMenu"
+        [(nzPopoverVisible)]="visible"
+        (nzPopoverVisibleChange)="change($event)"
+        class="p-3 circle cursor-pointer text-xl"
+        nzType="unordered-list">
+      </span>
+    </div>
+    <div class="w-full overflow-x-auto pl-5 pr-5 pb-5">
+      <nz-table #sortTable
+                [nzData]="partners"
+                [nzNoResult]="noResult"
+                [nzPageSize]="pageSize"
+                [nzShowPagination]="false"
+                [nzPaginationPosition]="'bottom'"
+                [nzFooter]="partners.length > 0 ? rangeTemplate : ''"
+                nzTableLayout="fixed"
+                class="min-w-[900px] bg-white rounded-lg mb-10 overflow-hidden shadow-[0_10px_25px_-5px_rgba(0,0,0,0.14)] whitespace-nowrap"
+                [nzShowTotal]="rangeTemplate">
+
+        <thead class="rounded-t-lg">
+        <tr>
+          @for (column of listOfColumn; track column) {
+            <th [nzSortFn]="column.compare" class="py-2 px-4">
+              {{column.title}}
+            </th>
+          }
+          <th class="py-2 px-4"></th>
+        </tr>
+        </thead>
+
+        <tbody class="bg-white">
+          @for (partner of sortTable.data; track partner) {
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td>{{ partner.id }}</td>
+              <td>{{ partner.partnerName }}</td>
+              <td>{{ partner.partnerType }}</td>
+              <td>{{ partner.contract }}</td>
+              <td>${{ partner.grosssales || 0 }}</td>
+              <td>${{ partner.commissions || 0 }}</td>
+              <td>{{ partner.conversions }}</td>
+              <td class="flex justify-center items-center">
+                <button class="list-button flex items-center gap-1 text-white text-center justify-center p-1"
+                        nz-button
+                        nzType="primary"
+                        [nzSize]="'small'"
+                        nzShape="round">
+                  <span class="relative -top-0.5" nz-icon nzType="unordered-list" nzTheme="outline"></span>
+                  {{'details' | translate}}
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+
+
+</div>
+
+<ng-template #rangeTemplate>
+  <span class="text-sm text-gray-600">
+    {{'showing_pagination_result' | translate: dataRange[0] : dataRange[1] : AllData.length }}
+  </span>
+  <div class="mt-5 flex justify-center items-center gap-3">
+    <button (click)="goToPreviousPage()"
+            [disabled]="currentPage == 1"
+            [class]="currentPage == 1 ? 'cursor-text' : 'cursor-pointer'"
+            class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-40">
+      <span  nz-icon nzType="left"></span>
+    </button>
+    <div class="w-9 h-9 flex items-center paginate-color justify-center rounded-full text-white font-semibold">
+      {{ currentPage }}
+    </div>
+    <button (click)="goToNextPage()"
+            [disabled]="currentPage == totalPages"
+            [class]="currentPage == totalPages ? 'cursor-text' : 'cursor-pointer'"
+            class="w-9 h-9 flex items-center justify-center cursor-pointer rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-40">
+      <span  nz-icon nzType="right"></span>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #noResult>
+  <div class="py-8 text-center text-gray-500">{{'no_data' | translate}}</div>
+</ng-template>
+
+<ng-template #listMenu>
+  <div class="flex flex-col sm:flex-row sm:items-center gap-4 w-full">
+    <div [class]="mobileWidth < windowSize ? 'pl-5' : ''" class="w-full sm:w-[40%] pt-1">
+      <div class="flex items-center w-full sm:w-fit bg-white pl-5 pr-5 p-3 rounded-lg border border-gray-200 shadow-md hover:shadow-md transition-shadow">
+        <fa-icon [icon]="faCalendarAlt" class="mr-2 text-gray-600 text-lg"></fa-icon>
+        @if (displayDate) {
+          <span class="flex-grow text-gray-700 text-[14px]">{{ displayDate }}</span>
+        } @else {
+          <nz-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" class="hidden"></nz-range-picker>
+        }
+        <fa-icon [icon]="caretDown" class="text-gray-600 text-lg cursor-pointer ml-2" (click)="showPicker()"></fa-icon>
+      </div>
+    </div>
+
+    <div class="w-full sm:w-[70%]">
+      <div class="flex sm:justify-center justify-center">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mt-2 sm:mt-3">
+          <button class="left-side flex items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
+            {{ 'choose_columns' | translate }} <span class="relative -top-0.5" nz-icon nzType="table" nzTheme="outline"></span>
+          </button>
+          <button (click)="onMessageClick()" class="left-side flex items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
+            {{'message_partners' | translate }} <span class="relative -top-0.5" nz-icon nzType="mail" nzTheme="outline"></span>
+          </button>
+          <button (click)="onExportClick()" class="left-side flex items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
+            {{'export_list' | translate }} <span class="relative -top-0.5" nz-icon nzType="download"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nz-modal [(nzVisible)]="isMessageModalVisible"
+            [nzTitle]="messageTitle"
+            [nzContent]="messageContent"
+            (nzOnCancel)="handleCancelMessage()"
+            (nzOnOk)="handleMessage()"
+            [nzOkText]="'Okay'"
+            class="rounded-md"
+            [nzCancelText]="'Close'">
+    <ng-template #messageTitle>
+      <h3 class="left-text text-lg">{{'message_partners' | translate}}</h3>
+    </ng-template>
+    <ng-template #messageContent>
+      <p>{{'click_to_message' | translate}}</p>
+    </ng-template>
+  </nz-modal>
+
+  <nz-modal [(nzVisible)]="isExportModalVisible"
+            [nzTitle]="title"
+            [nzContent]="exportContent"
+            (nzOnCancel)="handleCancelExport()"
+            (nzOnOk)="handleExport()"
+            [nzOkText]="'Okay'"
+            [nzCancelText]="'Close'">
+    <ng-template #title>
+      <h3 class="left-text text-lg">{{'export_option' | translate}}</h3>
+    </ng-template>
+    <ng-template #exportContent>
+      <ul class="space-y-1">
+        <li (click)="confirm('exported_as_pdf')"
+            class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition">
+          <span nz-icon nzType="file-pdf" nzTheme="outline" class="text-xl" style="color: #eb2f96"></span>
+          <span class="text-gray-800 font-medium">{{'export_as_pdf' | translate}}</span>
+        </li>
+        <li (click)="confirm('exported_as_excel')" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition">
+          <span nz-icon nzType="file-excel" nzTheme="outline" class="text-xl" style="color: #52c41a"></span>
+          <span class="text-gray-800 font-medium">{{'export_as_excel' | translate}}</span>
+        </li>
+        <li (click)="confirm('exported_as_csv')" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition">
+          <span nz-icon nzType="file-text" nzTheme="outline" class="text-xl" style="color: #52c41a"></span>
+          <span class="text-gray-800 font-medium">{{'export_as_csv' | translate}}</span>
+        </li>
+      </ul>
+    </ng-template>
+  </nz-modal>
+</ng-template>

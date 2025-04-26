@@ -1,0 +1,105 @@
+$text-color: #031050;
+$button-and-paginate: #3F2091;
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  th, td {
+    padding: 0.75rem;
+    border: transparent;
+  }
+  thead, th {
+    background-color: $text-color !important;
+    color: white !important;
+    font-family: 'Poppins', serif !important;
+    text-align: center !important;
+  }
+  tr:nth-child(even) {
+    background-color: #F4F7FE !important;
+  }
+  tr:nth-child(odd) {
+    background-color: #F9FBFE !important;
+  }
+  tr:hover {
+    background: #a7baef !important;
+    cursor: pointer;
+  }
+  tbody {
+    tr > td {
+      padding: 5px !important;
+      border: none !important;
+    }
+    tr {
+      text-align: center;
+      height: 5px !important;
+    }
+  }
+}
+.ant-btn-round {
+  height: 42px !important;
+  padding: 2px 10px !important;
+}
+::ng-deep .ant-table-container {
+  border: none !important;
+  box-shadow: none !important;
+}
+.ant-table-pagination {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0.5rem;
+  margin-top: 1rem !important;
+}
+.ant-pagination-item {
+  border-radius: 9999px !important; /* circular pagination */
+}
+
+.ant-pagination, .ant-pagination ol, .ant-pagination ul{
+  margin: 18px !important;
+}
+.list-button {
+  font-family: 'Poppins', serif;
+}
+.table-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.ant-btn-primary {
+  border-color: transparent !important;
+  background-color: #5E33CE !important;
+}
+
+.ant-btn-primary:hover {
+  background-color: $text-color !important;
+}
+.ant-btn-primary.left-side {
+  border-color: transparent !important;
+  background-color: $button-and-paginate !important;
+}
+
+.ant-btn-primary.left-side:hover {
+  background-color: #cbc2e8 !important;
+  color: $text-color !important;
+}
+.paginate-color {
+  background-color: $button-and-paginate !important;;
+}
+.ant-btn-round.ant-btn-sm{
+  height: 30px !important;
+  padding: 0 7px !important;
+}
+.circle {
+  clip-path: circle() !important;
+  color: $text-color;
+  background: #c8cbe4;
+}
+.ant-table-footer, .ant-table-thead > tr > th {
+  background: #ffffff;
+}
+.ant-modal-content {
+  border-radius: 8px !important;
+}
+.ant-modal-header {
+  border-radius: 11px !important;
+}

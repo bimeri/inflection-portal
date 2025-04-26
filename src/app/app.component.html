@@ -1,83 +1,78 @@
 <nz-layout>
-    <div class="flex h-18 pt-4 bg-white">
-      <div class="size-14 grow-5">
-        <div class="logo">
-          <img src="assets/images/vector1264-y7so.svg" alt="Vector1264" class="updated-partner-details-desktop-vector15"/>
+  @if (windowSize > mobileWidth) {
+    <nz-sider  [nzWidth]="215">
+      <span *ngTemplateOutlet="sideMenu"></span>
+    </nz-sider>
+  } @else {
+    <span class="fixed z-[30]" [class]="windowSize < mobileWidth? 'visible':'hidden'">
+      <div class="overlay" *ngIf="!isCollapsed" (click)="closeDrawer()"></div>
+      <nz-layout class="layout">
+          <nz-sider
+            [nzWidth]="215"
+            nzCollapsible
+            nzBreakpoint="lg"
+            [(nzCollapsed)]="isCollapsed"
+            [nzCollapsedWidth]="0"
+            class="fixed top-0 left-0 h-screen z-50 shadow-xl">
+             <span *ngTemplateOutlet="sideMenu"></span>
+          </nz-sider>
+       </nz-layout>
+    </span>
+  }
+
+  <nz-layout>
+    <nz-header [class]="mobileWidth > windowSize ? 'fixed top-0 left-0 w-full z-20 shadow-md' : ''"
+               class="bg-white px-4 py-2">
+      <div [class]="mobileWidth > windowSize ? 'pt-2' : 'pt-5'" class="flex items-center justify-between w-full">
+        <div [class]="mobileWidth > windowSize ? 'pl-3' : 'pl-8'"
+             class="flex items-start gap-2 flex-grow min-w-0">
+          <div class="cursor-pointer text-lg left-text sm:text-lg font-semibold truncate">
+            {{'power_plate' | translate}}
+            <div class="dashboard-title sm:text-base truncate">{{'dashboard' | translate}}</div>
+          </div>
+          <fa-icon [class]="mobileWidth > windowSize ? 'ml-10' : 'ml-20'" [icon]="caretDown" class="mt-1 cursor-pointer text-sm sm:text-base"></fa-icon>
+        </div>
+
+        <div class="flex items-center gap-1 sm:gap-4 shrink-0">
+          <div class="relative w-10 h-10 sm:w-12 sm:h-12 shrink-0">
+            <img src="/assets/images/bg1258-6vi-200h.png" alt="user-logo" class="w-full h-full rounded-full object-cover bg-pink-500" />
+            <span class="absolute inset-0 flex items-center justify-center text-white font-bold text-xs sm:text-sm">HD</span>
+          </div>
+          <div [class]="mobileWidth > windowSize ? 'pr-3' : 'pr-8'" class="">
+            <span class="font-medium text-sm sm:text-base block">TEST</span>
+            <div class="font-medium -mt-1 text-sm sm:text-base">User</div>
+          </div>
         </div>
       </div>
-      <div class="flex justify-between size-14 grow-5">
-        <div class="hover:underline cursor-pointer updated-partner-details-desktop-text101">Power Plate</div>
-        <fa-icon [icon]="caretDown"></fa-icon>
-      </div>
-      <div class="size-14 grow-5">
-        <div class="flex items-center gap-2 text-center justify-center">
-          <div class="relative shrink-0">
-            <img src="/assets/images/bg1258-6vi-200h.png" alt="bg1258"
-              class="w-12 h-12 rounded-full object-cover bg-pink-500"/>
-            <span class="absolute inset-0 flex items-center justify-center text-white font-bold text-sm">HD
-            </span>
-          </div>
-          <div class="flex ml-1">
-            <span class="font-medium updated-partner-details-desktop-text102">User</span>
-            <span class="text-gray-600 updated-partner-details-desktop-text103 mt-5">TEST</span> <!-- Adjust mt-1 for spacing -->
-          </div>
-        </div>
-      </div>
-      <div class="size-14 grow-5 updated-partner-details-desktop-text100">Dashboard</div>
-    </div>
-
-
-    <div class="flex h-10 pb-2 relative -top-4">
-      <div class="left-side size-14 grow-3 border-l-3 border-pink-500 text-white flex items-center justify-center">
-        <fa-icon class="text-pink-500 text-xl mr-3" [icon]="faHome"></fa-icon>
-        <span>Dashboard</span>
-      </div>
-
-      <div class="flex ml-[13%] items-center mt-3 bg-white size-10 grow-4 p-2 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-        <fa-icon [icon]="faCalendarAlt" class="text-gray-400 mr-2"></fa-icon>
-        @if (displayDate) {
-          <span class="flex-grow text-gray-700 text-[12px]">
-            {{ displayDate }}
-          </span>
-        } @else {
-          <nz-range-picker
-            [(ngModel)]="date"
-            (ngModelChange)="onChange($event)"
-            class="hidden">
-          </nz-range-picker>
-        }
-        <fa-icon [icon]="caretDown" class="text-gray-500 cursor-pointer ml-2" (click)="showPicker()"></fa-icon>
-      </div>
-
-      <div class="size-14 grow-12 flex items-center justify-center">
-        <div class="flex items-center gap-4 mt-3">
-          <button class="left-side flex items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
-            Choose Columns <span class="relative -top-0.5" nz-icon nzType="table" nzTheme="outline"></span>
-          </button>
-          <button (click)="onMessageClick()" class="left-side items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
-            Message Partners <span class="relative -top-0.5" nz-icon nzType="mail" nzTheme="outline"></span>
-          </button>
-          <button (click)="onExportClick()" class="left-side items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
-            Export List <span class="relative -top-0.5" nz-icon nzType="download"></span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-  <nz-content class="outer-content">
-    <nz-layout class="inner-layout">
-      <nz-sider nzWidth="200px" nzTheme="light">
-        <ul class="sider-menu left-0">
-          <div class="flex items-left justify-left">
-            <span nz-icon nzType="user" nzTheme="outline" class="mr-3 left-menu"></span>
-            <span class="left-menu">Partners</span>
-          </div>
-        </ul>
-      </nz-sider>
-      <nz-content class="inner-content">
-        <router-outlet></router-outlet>
-      </nz-content>
-    </nz-layout>
-    <nz-footer></nz-footer>
-  </nz-content>
+    </nz-header>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
 </nz-layout>
+
+<ng-template #sideMenu>
+  <div class="pt-10 justify-center flex">
+    <img [src]="logo" alt="inflektion-logo" class="logo"/>
+  </div>
+
+  <ul class="left-menu pt-5">
+    @for (item of menuItems; track item; let i = $index) {
+      <li>
+        <div (mouseenter)="setHover(i)"
+             (mouseleave)="setHover(null)"
+             [class]="i == 0 ? 'active-item text-white border-l-4 border-pink-500':'text-color'"
+             class="flex items-center gap-3 p-3">
+          <div [@vibrate]="hoveredIndex === i ? 'vibrating' : 'idle'" class="icon-wrapper w-6 flex justify-center">
+            @if(i === 0) {
+              <fa-icon class="text-pink-500 text-xl" [icon]="homeIcon"></fa-icon>
+            } @else {
+              <span [nzType]="item.icon" nz-icon nzTheme="outline" class="text-xl"></span>
+            }
+          </div>
+          <span>{{ item.label }}</span>
+        </div>
+      </li>
+    }
+  </ul>
+</ng-template>

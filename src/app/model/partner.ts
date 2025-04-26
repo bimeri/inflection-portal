@@ -7,3 +7,8 @@ export interface Partner {
   grosssales: number;
   contract: string;
 }
+
+export interface MenuItem {
+  label: string;
+  icon: string;
+}

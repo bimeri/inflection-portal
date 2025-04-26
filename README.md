@@ -48,6 +48,11 @@ This project is a responsive single-page application (SPA) built with Angular. I
 - Placeholder buttons: "Message Partners", "Export List"
 - Error handling and loading indicators
 - Mobile-friendly layout
+- The application is internationalized with a translation pipe
+- Added animation on hovering on the left menu
+- added modal to display application export supported type 
+- added angular routing, although for the moment only the home page and not-found page are accessible
+- implemented a page not found, if user unintentionally type a different url
 
 ## Technologies Used
 
@@ -55,12 +60,25 @@ This project is a responsive single-page application (SPA) built with Angular. I
 - SCSS
 - antd design
 - ngx-toastr
+- tailwindcss
 - TypeScript
 - RxJS for async data handling
 
 ## Error Handling
-
+- Implemented toast service to toast message
+- I created a general error filtering logic, to display appropriate error based on the error type
 - Displays user-friendly messages on API failure
 - Defaults to `$0` if numeric fields like `commissions` or `grosssales` are `null`
 
-![img.png](img.png)
+## Challenged faced
+- I could not finish it in one because i was did not have a licence for figma, so I had to code everything from scratch
+- I have some small difficulty mobile responsiveness, especially with the table, but i succeeded
+
+### final result
+![img_1.png](img_1.png)
+
+### view on small size
+![img_2.png](img_2.png)
+
+### view on mobile
+![img_3.png](img_3.png)
