@@ -75,6 +75,7 @@ https://github.com/bimeri/inflection-portal.git
 - I could not finish it in one day because i did not have a licence for figma, so I had to code everything from scratch, and the first design i tried to view from figma was not clear
 - I have some small difficulty in mobile responsiveness, especially with the table, but i resolved it succeeded
 - I had to customise the library use in other to achieve the same output, example pagination library did not have the same pagination payout as shown in the design, so i had to do manual styling
+- I use the fore command to install dependency because i started the application with tailwind css version ^4.1.4 which is not compatible with angular 18. I could not revert the version because of insufficient time.
 
 ### final result
 ![img_1.png](img_1.png)
