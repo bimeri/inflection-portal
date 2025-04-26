@@ -55,9 +55,9 @@
               <td>{{ partner.partnerName }}</td>
               <td>{{ partner.partnerType }}</td>
               <td>{{ partner.contract }}</td>
-              <td>${{ partner.grosssales || 0 }}</td>
-              <td>${{ partner.commissions || 0 }}</td>
-              <td>{{ partner.conversions }}</td>
+              <td>{{ partner.grosssales || 0 | currency:'USD':'symbol':'1.2-2' }}</td>
+              <td>{{ partner.commissions || 0 | currency:'USD':'symbol':'1.2-2' }}</td>
+              <td>{{ partner.conversions || 0 | number: '1.0-0' }}</td>
               <td class="flex justify-center items-center">
                 <button class="list-button flex items-center gap-1 text-white text-center justify-center p-1"
                         nz-button
@@ -74,9 +74,8 @@
       </nz-table>
     </div>
   </div>
-
-
 </div>
+
 
 <ng-template #rangeTemplate>
   <span class="text-sm text-gray-600">

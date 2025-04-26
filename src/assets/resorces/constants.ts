@@ -11,7 +11,7 @@ export const constants = {
       compare: (a: Partner, b: Partner) => a.partnerName.localeCompare(b.partnerName),
     },
     {
-      title: 'type',
+      title: 'Type',
       compare: (a: Partner, b: Partner) => a.partnerType.localeCompare(b.partnerType),
     },
     {

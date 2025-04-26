@@ -3,7 +3,7 @@ import {NzDatePickerComponent, NzRangePickerComponent} from "ng-zorro-antd/date-
 import {SkeletonLoaderComponent} from "../skeleton-loader/skeleton-loader.component";
 import {TranslationService} from "../../services/translation/translation.service";
 import {faCalendarAlt, faCaretDown} from "@fortawesome/free-solid-svg-icons";
-import {DatePipe, NgClass, NgIf, NgTemplateOutlet} from "@angular/common";
+import {CurrencyPipe, DatePipe, DecimalPipe, NgClass, NgIf, NgTemplateOutlet} from "@angular/common";
 import {ToastService} from "../../services/notification/toast.service";
 import {NzTableModule, NzThAddOnComponent} from "ng-zorro-antd/table";
 import {PartnerService} from "../../services/partner/partner.service";
@@ -44,6 +44,8 @@ import {animate, query, stagger, style, transition, trigger} from "@angular/anim
     FormsModule,
     NgClass,
     NgIf,
+    CurrencyPipe,
+    DecimalPipe,
   ],
   templateUrl: './partner.component.html',
   styleUrl: './partner.component.scss',
