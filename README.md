@@ -38,8 +38,9 @@ This project is a responsive single-page application (SPA) built with Angular. I
 
 ## GitHub Repository
 
-[Repository link goes here]
+https://github.com/bimeri/inflection-portal.git
 
+ - to build app for gitHub deployment`ng b --output-path docs --base-href /inflecktion-portal/`
 ## Features
 
 - Fetches partner data from a remote API
