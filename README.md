@@ -1,6 +1,6 @@
 # InflectionPortal
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.10.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.13.
 
 ## Development server
 
@@ -40,7 +40,7 @@ https://bimeri.github.io/inflection-portal/
 
 https://github.com/bimeri/inflection-portal.git
 
- - to build app for gitHub deployment`ng b --output-path docs --base-href /inflecktion-portal/`
+ - to build app for gitHub deployment`ng build --output-path docs --base-href /inflecktion-portal/`
 ## Features
 
 - Fetches partner data from a remote API
@@ -72,8 +72,9 @@ https://github.com/bimeri/inflection-portal.git
 - Defaults to `$0` if numeric fields like `commissions` or `grosssales` are `null`
 
 ## Challenged faced
-- I could not finish it in one because i was did not have a licence for figma, so I had to code everything from scratch
-- I have some small difficulty mobile responsiveness, especially with the table, but i succeeded
+- I could not finish it in one day because i did not have a licence for figma, so I had to code everything from scratch, and the first design i tried to view from figma was not clear
+- I have some small difficulty in mobile responsiveness, especially with the table, but i resolved it succeeded
+- I had to customise the library use in other to achieve the same output, example pagination library did not have the same pagination payout as shown in the design, so i had to do manual styling
 
 ### final result
 ![img_1.png](img_1.png)
