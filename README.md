@@ -34,7 +34,7 @@ This project is a responsive single-page application (SPA) built with Angular. I
 
 ## Live Demo
 
-[Live URL goes here]
+https://bimeri.github.io/inflection-portal/
 
 ## GitHub Repository
 
