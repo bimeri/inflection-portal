@@ -21,6 +21,7 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 import {Partner} from "../../model/partner";
 import {FormsModule} from "@angular/forms";
 import {Subscription} from "rxjs";
+import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-partner',
@@ -47,7 +48,23 @@ import {Subscription} from "rxjs";
   templateUrl: './partner.component.html',
   styleUrl: './partner.component.scss',
   encapsulation: ViewEncapsulation.None,
-  providers: [DatePipe]
+  providers: [DatePipe],
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+        query(':enter', [
+          style({ opacity: 0, transform: 'translateX(-20px)' }),
+          stagger('100ms', [
+            animate('300ms ease-out', style({ opacity: 1, transform: 'translateX(0)' }))
+          ])
+        ], { optional: true }),
+
+        query(':leave', [
+          animate('300ms ease-in', style({ opacity: 0, transform: 'translateX(20px)' }))
+        ], { optional: true })
+      ])
+    ])
+  ]
 })
 export class PartnerComponent implements OnInit, OnDestroy{
   protected listOfColumn: {title: string, compare: any}[] = constants.LIST_OF_COLUMNS;
@@ -57,6 +74,7 @@ export class PartnerComponent implements OnInit, OnDestroy{
   private subscription: Subscription = new Subscription();
   protected mobileWidth: number = constants.MOBILE_WIDTH;
   protected pageSize: number = constants.PAGE_SIZE;
+  protected chooseColumnModalVisible = false;
   protected isMessageModalVisible = false;
   protected isExportModalVisible = false;
   protected size: NzButtonSize = 'default';
@@ -68,6 +86,8 @@ export class PartnerComponent implements OnInit, OnDestroy{
   protected currentPage: number = 1;
   protected windowSize: number = 0;
   protected downloading: boolean = false;
+  protected availableColumns = [...this.listOfColumn];
+  protected selectedColumns: { title: string, compare: any }[] = [];
   protected date: any = null;
 
   constructor(private datePipe: DatePipe, private partnerService: PartnerService,
@@ -93,7 +113,7 @@ export class PartnerComponent implements OnInit, OnDestroy{
       this.downloading = false;
       return ;
     }
-    this.nzMessageService.info(translatedText);
+    this.nzMessageService.info(`${translatedText} 😜 😉`);
     this.handleExport();
   }
 
@@ -120,6 +140,10 @@ export class PartnerComponent implements OnInit, OnDestroy{
     this.isMessageModalVisible = true;
   }
 
+  onColumnModalClick(): void {
+    this.chooseColumnModalVisible = true;
+  }
+
   onExportClick(): void {
     this.isExportModalVisible = true;
   }
@@ -128,6 +152,26 @@ export class PartnerComponent implements OnInit, OnDestroy{
     this.nzMessageService.info(this.tService.translateMessage('message_sent'));
     this.toastService.showSuccess(this.tService.translateMessage('success'),  this.tService.translateMessage('message_sent'));
     this.handleCancelMessage();
+  }
+
+  handleColumn(): void {
+    let selected = '';
+    if (this.selectedColumns.length == 0) {
+      this.toastService.showInfo(this.tService.translateMessage('info'),  this.tService.translateMessage('no_column_selected'));
+      this.chooseColumnModalVisible = !this.chooseColumnModalVisible;
+      return;
+    }
+    this.selectedColumns.forEach(column => {
+      selected += `${column.title.toLowerCase()}, `;
+    });
+    this.nzMessageService.info(this.tService.translateMessage('success_column_message', [selected]), {
+      nzDuration: 4000,
+      nzAnimate: true,
+      nzPauseOnHover: true
+    });
+
+    this.toastService.showSuccess(this.tService.translateMessage('success'),  this.tService.translateMessage('success_column'));
+    this.chooseColumnModalVisible = !this.chooseColumnModalVisible;
   }
 
   handleExport(): void {
@@ -140,6 +184,20 @@ export class PartnerComponent implements OnInit, OnDestroy{
 
   handleCancelMessage(): void {
     this.isMessageModalVisible = false;
+  }
+
+  handleColumnModalCancel(): void {
+    this.chooseColumnModalVisible = false;
+  }
+
+  selectColumn(column: { title: string, compare: any }) {
+    this.availableColumns = this.availableColumns.filter(c => c.title !== column.title);
+    this.selectedColumns.push(column);
+  }
+
+  deselectColumn(column: { title: string, compare: any }) {
+    this.selectedColumns = this.selectedColumns.filter(c => c.title !== column.title);
+    this.availableColumns.push(column);
   }
 
   private getPartners() {

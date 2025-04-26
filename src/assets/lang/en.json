@@ -34,5 +34,10 @@
   "exported_as_csv": "Exported as CSV",
   "export_as_csv": "Export as CSV",
   "page_not_found": "We can't find the page you're looking for. It might have been removed or never existed",
-  "go_home": "Go Home"
+  "go_home": "Go Home",
+  "success_column_message": "Columns selected: <b>{0}</b>",
+  "success_column": "You successfully selected your columns:, \uD83E\uDD23 \uD83E\uDD23",
+  "select_column": "Select your Columns",
+  "info": "Info",
+  "no_column_selected": "You did not select any column \uD83E\uDD79 \uD83E\uDD72"
 }

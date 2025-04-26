@@ -122,7 +122,7 @@
     <div class="w-full sm:w-[70%]">
       <div class="flex sm:justify-center justify-center">
         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mt-2 sm:mt-3">
-          <button class="left-side flex items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
+          <button (click)="onColumnModalClick()" class="left-side flex items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
             {{ 'choose_columns' | translate }} <span class="relative -top-0.5" nz-icon nzType="table" nzTheme="outline"></span>
           </button>
           <button (click)="onMessageClick()" class="left-side flex items-baseline gap-1" nz-button nzType="primary" [nzSize]="size" nzShape="round">
@@ -135,6 +135,44 @@
       </div>
     </div>
   </div>
+
+  <nz-modal [(nzVisible)]="chooseColumnModalVisible"
+            [nzTitle]="columnTitle"
+            [nzContent]="columnContent"
+            (nzOnCancel)="handleColumnModalCancel()"
+            (nzOnOk)="handleColumn()"
+            [nzOkText]="'Okay'"
+            class="rounded-md"
+            [nzCancelText]="'Close'">
+    <ng-template #columnTitle>
+      <h3 class="left-text text-lg">{{'select_column' | translate}}</h3>
+    </ng-template>
+    <ng-template #columnContent>
+      <div class="column-container">
+        <div class="column-list">
+          <h3>Available Columns</h3>
+          <div [@listAnimation]>
+            @for (col of availableColumns; track col) {
+              <div (click)="selectColumn(col)" class="column-item">
+                {{ col.title }}
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="column-list">
+          <h3>Selected Columns</h3>
+          <div [@listAnimation]>
+            @for (selectedC of selectedColumns; track selectedC) {
+              <div (click)="deselectColumn(selectedC)" class="column-item">
+                {{ selectedC.title }}
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </nz-modal>
 
   <nz-modal [(nzVisible)]="isMessageModalVisible"
             [nzTitle]="messageTitle"

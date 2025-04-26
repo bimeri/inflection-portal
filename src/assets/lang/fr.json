@@ -34,5 +34,10 @@
   "exported_as_csv": "Exporté en CSV",
   "export_as_csv": "Exporter en CSV",
   "page_not_found": "Nous ne trouvons pas la page que vous recherchez. Elle a peut-être été supprimée ou n'a jamais existé",
-  "go_home": "Aller à l'accueil"
+  "go_home": "Aller à l'accueil",
+  "success_column_message": "Colonnes sélectionnées : <b>{0}</b>",
+  "success_column": "Vous avez sélectionné vos colonnes avec succès 😄😄",
+  "select_column": "Sélectionnez vos colonnes",
+  "info": "Infos",
+  "no_column_selected": "Vous n'avez sélectionné aucune colonne 😥😢"
 }

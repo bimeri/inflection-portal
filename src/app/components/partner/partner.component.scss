@@ -103,3 +103,34 @@ table {
 .ant-modal-header {
   border-radius: 11px !important;
 }
+
+.column-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  height: 400px; /* or 100% if you want full modal height */
+}
+
+.column-list {
+  flex: 1;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  padding: 10px;
+  overflow-y: auto;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.column-item {
+  background: white;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.column-item:hover {
+  background-color: #e0e0e0;
+}
