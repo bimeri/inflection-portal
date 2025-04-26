@@ -67,6 +67,7 @@ export class PartnerComponent implements OnInit, OnDestroy{
   protected AllData: Partner[] = [];
   protected currentPage: number = 1;
   protected windowSize: number = 0;
+  protected downloading: boolean = false;
   protected date: any = null;
 
   constructor(private datePipe: DatePipe, private partnerService: PartnerService,
@@ -81,10 +82,18 @@ export class PartnerComponent implements OnInit, OnDestroy{
     );
   }
 
-  confirm(text: string): void {
+  async confirm(text: string): Promise<void> {
+    const element = document.getElementById('capture-section');
     const translatedText = this.tService.translateMessage(text);
+    if (element != null && text == 'exported_as_pdf') {
+      this.downloading = true;
+     await this.partnerService.downloadAsPDF('capture-section');
+      this.toastService.showSuccess(this.tService.translateMessage('success'),  translatedText);
+      this.handleExport();
+      this.downloading = false;
+      return ;
+    }
     this.nzMessageService.info(translatedText);
-    this.toastService.showSuccess(this.tService.translateMessage('success'),  translatedText);
     this.handleExport();
   }
 

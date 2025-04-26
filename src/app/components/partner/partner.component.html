@@ -1,4 +1,5 @@
 <div *ngIf="loading" class="p-10 mt-10 text-2xl font-light">
+  <p class="text-lg text center font-light p-2">Loading table data, please wait ...</p>
   <app-skeleton-loader></app-skeleton-loader>
 </div>
 <div class="flex text-center p-5 mt-10 text-2xl font-light bg-red-100 rounded-lg justify-center" *ngIf="error">
@@ -24,7 +25,7 @@
         nzType="unordered-list">
       </span>
     </div>
-    <div class="w-full overflow-x-auto pl-5 pr-5 pb-5">
+    <div class="w-full overflow-x-auto pl-5 pr-5 pb-5" id="capture-section">
       <nz-table #sortTable
                 [nzData]="partners"
                 [nzNoResult]="noResult"
@@ -167,14 +168,18 @@
             class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition">
           <span nz-icon nzType="file-pdf" nzTheme="outline" class="text-xl" style="color: #eb2f96"></span>
           <span class="text-gray-800 font-medium">{{'export_as_pdf' | translate}}</span>
+          <span *ngIf="downloading" class="text-gray-800 font-medium -top-0.5" nz-icon nzType="loading"></span>
         </li>
         <li (click)="confirm('exported_as_excel')" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition">
           <span nz-icon nzType="file-excel" nzTheme="outline" class="text-xl" style="color: #52c41a"></span>
           <span class="text-gray-800 font-medium">{{'export_as_excel' | translate}}</span>
+
         </li>
         <li (click)="confirm('exported_as_csv')" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition">
           <span nz-icon nzType="file-text" nzTheme="outline" class="text-xl" style="color: #52c41a"></span>
           <span class="text-gray-800 font-medium">{{'export_as_csv' | translate}}</span>
+
+
         </li>
       </ul>
     </ng-template>

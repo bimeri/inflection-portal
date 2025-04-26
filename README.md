@@ -40,7 +40,7 @@ https://bimeri.github.io/inflection-portal/
 
 https://github.com/bimeri/inflection-portal.git
 
- - to build app for gitHub deployment`ng build --output-path docs --base-href /inflecktion-portal/`
+ - to build app for gitHub deployment`ng b --output-path docs --base-href /inflecktion-portal/`
 ## Features
 
 - Fetches partner data from a remote API
