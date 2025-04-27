@@ -39,5 +39,6 @@
   "success_column": "You successfully selected your columns:, \uD83E\uDD23 \uD83E\uDD23",
   "select_column": "Select your Columns",
   "info": "Info",
-  "no_column_selected": "You did not select any column \uD83E\uDD79 \uD83E\uDD72"
+  "no_column_selected": "You did not select any column \uD83E\uDD79 \uD83E\uDD72",
+  "you_selected_the_date": "You selected the date:<br/> <b>{0}</b> \uD83D\uDE0E"
 }

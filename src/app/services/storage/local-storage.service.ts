@@ -7,19 +7,23 @@ export class LocalStorageService {
 
   constructor() { }
 
-  public clearAll() {
-    localStorage.clear();
-  }
 
   public setItem(key: string, value: any): void {
-    localStorage.setItem(key, JSON.stringify(value));
+    const storageValue = typeof value === 'string' ? value : JSON.stringify(value);
+    localStorage.setItem(key, storageValue);
   }
 
-  public getItem(key: string, noDecryption?: boolean): any {
-    return JSON.parse(<any>localStorage.getItem(key));
-  }
+  public getItem(key: string): any {
+    const item = localStorage.getItem(key);
 
-  public deleteItem(key: string): any {
-    localStorage.removeItem(key);
+    if (item === null) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(item);
+    } catch (e) {
+      return item;
+    }
   }
 }

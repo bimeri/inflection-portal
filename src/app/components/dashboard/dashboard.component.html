@@ -2,28 +2,28 @@
   <p class="text-lg text center font-light p-2">Loading table data, please wait ...</p>
   <app-skeleton-loader></app-skeleton-loader>
 </div>
-<div class="flex text-center p-5 mt-20 ml-10 mr-10 text-2xl font-light bg-red-100 rounded-lg justify-center" *ngIf="error">
+
+<div *ngIf="error" class="flex text-red-600 p-3 mt-20 ml-6 mr-5 text-xl font-light bg-red-50 rounded-lg">
  {{'error_message' | translate: error}}
 </div>
 
-<div [class]="mobileWidth > windowSize ? 'mt-10' : ''" class="overflow-x-auto">
-  <div *ngIf="!loading && !error" nz-row class="mt-4 ml-5">
+<div *ngIf="!loading && !error" [class]="mobileWidth > windowSize ? 'mt-8' : ''" class="overflow-x-auto">
+  <div nz-row class="mt-4 ml-5">
     <ng-container *ngIf="mobileWidth < windowSize">
       <ng-container *ngTemplateOutlet="listMenu"></ng-container>
     </ng-container>
   </div>
-  <div *ngIf="!loading && !error" class="rounded-lg overflow-hidden p-6">
-    <div *ngIf="mobileWidth > windowSize" class="flex justify-end mb-4">
-      <span
-        nz-popover
-        nz-icon
-        nzPopoverTrigger="click"
-        [nzPopoverContent]="listMenu"
-        [(nzPopoverVisible)]="visible"
-        (nzPopoverVisibleChange)="change($event)"
-        class="p-3 circle cursor-pointer text-xl"
-        nzType="unordered-list">
-      </span>
+  <div class="rounded-lg overflow-hidden pt-6 pb-6">
+    <div *ngIf="mobileWidth > windowSize" class="flex justify-between mb-0 ml-1 mr-1">
+      <fa-icon nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu" [(nzVisible)]="isDropdownVisible" [icon]="faCalendarAlt" class="ml-10 p-3 circle text-gray-600 text-xl"></fa-icon>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <span *ngTemplateOutlet="calendar"></span>
+      </nz-dropdown-menu>
+      <div class="flex py-2 gap-2">
+        <span (click)="onColumnModalClick()" class="p-3 circle cursor-pointer text-xl" nz-icon nzType="table" nzTheme="outline"></span>
+        <span (click)="onMessageClick()" class="p-3 circle cursor-pointer text-xl" nz-icon nzType="mail" nzTheme="outline"></span>
+        <span (click)="onExportClick()" class="p-3 circle cursor-pointer text-xl" nz-icon nzType="download"></span>
+      </div>
     </div>
     <div class="w-full overflow-x-auto pl-5 pr-5 pb-5" id="capture-section">
       <nz-table #sortTable
@@ -36,7 +36,6 @@
                 nzTableLayout="fixed"
                 class="min-w-[900px] bg-white rounded-lg mb-10 overflow-hidden shadow-[0_10px_25px_-5px_rgba(0,0,0,0.14)] whitespace-nowrap"
                 [nzShowTotal]="rangeTemplate">
-
         <thead class="rounded-t-lg">
         <tr>
           @for (column of listOfColumn; track column) {
@@ -47,7 +46,6 @@
           <th class="py-2 px-4"></th>
         </tr>
         </thead>
-
         <tbody class="bg-white">
           @for (partner of sortTable.data; track partner) {
             <tr class="hover:bg-gray-50 transition-colors">
@@ -85,8 +83,8 @@
     <button (click)="goToPreviousPage()"
             [disabled]="currentPage == 1"
             [class]="currentPage == 1 ? 'cursor-text' : 'cursor-pointer'"
-            class="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-40">
-      <span  nz-icon nzType="left"></span>
+            class="w-9 h-9 flex items-center border-violet-900 justify-center rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-40">
+      <span nz-icon nzType="left"></span>
     </button>
     <div class="w-9 h-9 flex items-center paginate-color justify-center rounded-full text-white font-semibold">
       {{ currentPage }}
@@ -94,8 +92,8 @@
     <button (click)="goToNextPage()"
             [disabled]="currentPage == totalPages"
             [class]="currentPage == totalPages ? 'cursor-text' : 'cursor-pointer'"
-            class="w-9 h-9 flex items-center justify-center cursor-pointer rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-40">
-      <span  nz-icon nzType="right"></span>
+            class="w-9 h-9 flex items-center border-violet-900 justify-center cursor-pointer rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-40">
+      <span nz-icon nzType="right"></span>
     </button>
   </div>
 </ng-template>
@@ -106,17 +104,7 @@
 
 <ng-template #listMenu>
   <div class="flex flex-col sm:flex-row sm:items-center gap-4 w-full">
-    <div [class]="mobileWidth < windowSize ? 'pl-5' : ''" class="w-full sm:w-[40%] pt-1">
-      <div class="flex items-center w-full sm:w-fit bg-white pl-5 pr-5 p-3 rounded-lg border border-gray-200 shadow-md hover:shadow-md transition-shadow">
-        <fa-icon [icon]="faCalendarAlt" class="mr-2 text-gray-600 text-lg"></fa-icon>
-        @if (displayDate) {
-          <span class="flex-grow text-gray-700 text-[14px]">{{ displayDate }}</span>
-        } @else {
-          <nz-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" class="hidden"></nz-range-picker>
-        }
-        <fa-icon [icon]="caretDown" class="text-gray-600 text-lg cursor-pointer ml-2" (click)="showPicker()"></fa-icon>
-      </div>
-    </div>
+    <span *ngTemplateOutlet="calendar"></span>
 
     <div class="w-full sm:w-[70%]">
       <div class="flex sm:justify-center justify-center">
@@ -134,91 +122,103 @@
       </div>
     </div>
   </div>
+</ng-template>
 
-  <nz-modal [(nzVisible)]="chooseColumnModalVisible"
-            [nzTitle]="columnTitle"
-            [nzContent]="columnContent"
-            (nzOnCancel)="handleColumnModalCancel()"
-            (nzOnOk)="handleColumn()"
-            [nzOkText]="'Okay'"
-            class="rounded-md"
-            [nzCancelText]="'Close'">
-    <ng-template #columnTitle>
-      <h3 class="left-text text-lg">{{'select_column' | translate}}</h3>
-    </ng-template>
-    <ng-template #columnContent>
-      <div class="column-container">
-        <div class="column-list">
-          <h3>Available Columns</h3>
-          <div [@listAnimation]>
-            @for (col of availableColumns; track col) {
-              <div (click)="selectColumn(col)" class="column-item">
-                {{ col.title }}
-              </div>
-            }
-          </div>
-        </div>
+<ng-template #calendar>
+  <div [class]="mobileWidth < windowSize ? 'pl-0' : ''" class="w-full sm:w-[40%] pt-1">
+    <div class="flex items-center w-full sm:w-fit bg-white pr-5 p-2 rounded-lg border border-gray-200 shadow-md hover:shadow-md transition-shadow">
+      <fa-icon [icon]="faCalendarAlt" class="mr-2 text-gray-600 text-lg"></fa-icon>
+      @if (displayDate) {
+        <span class="flex-grow text-gray-700 text-[14px]">{{ displayDate }}</span>
+      } @else {
+        <nz-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" class="hidden"></nz-range-picker>
+      }
+      <fa-icon [icon]="caretDown" class="text-gray-600 text-lg cursor-pointer ml-2" (click)="showPicker()"></fa-icon>
+    </div>
+  </div>
+</ng-template>
 
-        <div class="column-list">
-          <h3>Selected Columns</h3>
-          <div [@listAnimation]>
-            @for (selectedC of selectedColumns; track selectedC) {
-              <div (click)="deselectColumn(selectedC)" class="column-item">
-                {{ selectedC.title }}
-              </div>
-            }
-          </div>
+<nz-modal [(nzVisible)]="chooseColumnModalVisible"
+          [nzTitle]="columnTitle"
+          [nzContent]="columnContent"
+          (nzOnCancel)="handleColumnModalCancel()"
+          (nzOnOk)="handleColumn()"
+          [nzOkText]="'Okay'"
+          class="rounded-md"
+          (click)="$event.stopPropagation()"
+          [nzCancelText]="'Close'">
+  <ng-template #columnTitle>
+    <h3 class="left-text text-xl">{{'select_column' | translate}}</h3>
+  </ng-template>
+  <ng-template #columnContent>
+    <div class="column-container">
+      <div class="column-list">
+        <h3 class="font">Available Columns</h3>
+        <div [@listAnimation]>
+          @for (col of availableColumns; track col) {
+            <div (click)="selectColumn(col)" class="column-item">
+              {{ col.title }}
+            </div>
+          }
         </div>
       </div>
-    </ng-template>
-  </nz-modal>
 
-  <nz-modal [(nzVisible)]="isMessageModalVisible"
-            [nzTitle]="messageTitle"
-            [nzContent]="messageContent"
-            (nzOnCancel)="handleCancelMessage()"
-            (nzOnOk)="handleMessage()"
-            [nzOkText]="'Okay'"
-            class="rounded-md"
-            [nzCancelText]="'Close'">
-    <ng-template #messageTitle>
-      <h3 class="left-text text-lg">{{'message_partners' | translate}}</h3>
-    </ng-template>
-    <ng-template #messageContent>
-      <p>{{'click_to_message' | translate}}</p>
-    </ng-template>
-  </nz-modal>
+      <div class="column-list">
+        <h3 class="font">Selected Columns</h3>
+        <div [@listAnimation]>
+          @for (selectedC of selectedColumns; track selectedC) {
+            <div (click)="deselectColumn(selectedC)" class="column-item-selected bg-blue-100 text-blue-600">
+              {{ selectedC.title }}
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</nz-modal>
 
-  <nz-modal [(nzVisible)]="isExportModalVisible"
-            [nzTitle]="title"
-            [nzContent]="exportContent"
-            (nzOnCancel)="handleCancelExport()"
-            (nzOnOk)="handleExport()"
-            [nzOkText]="'Okay'"
-            [nzCancelText]="'Close'">
-    <ng-template #title>
-      <h3 class="left-text text-lg">{{'export_option' | translate}}</h3>
-    </ng-template>
-    <ng-template #exportContent>
-      <ul class="space-y-1">
-        <li (click)="confirm('exported_as_pdf')"
-            class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition">
-          <span nz-icon nzType="file-pdf" nzTheme="outline" class="text-xl" style="color: #eb2f96"></span>
-          <span class="text-gray-800 font-medium">{{'export_as_pdf' | translate}}</span>
-          <span *ngIf="downloading" class="text-gray-800 font-medium -top-0.5" nz-icon nzType="loading"></span>
-        </li>
-        <li (click)="confirm('exported_as_excel')" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition">
-          <span nz-icon nzType="file-excel" nzTheme="outline" class="text-xl" style="color: #52c41a"></span>
-          <span class="text-gray-800 font-medium">{{'export_as_excel' | translate}}</span>
+<nz-modal [(nzVisible)]="isMessageModalVisible"
+          [nzTitle]="messageTitle"
+          [nzContent]="messageContent"
+          (nzOnCancel)="handleCancelMessage()"
+          (nzOnOk)="handleMessage()"
+          [nzOkText]="'Okay'"
+          class="rounded-md"
+          [nzCancelText]="'Close'">
+  <ng-template #messageTitle>
+    <h3 class="left-text text-xl">{{'message_partners' | translate}}</h3>
+  </ng-template>
+  <ng-template #messageContent>
+    <p class="text-lg font">{{'click_to_message' | translate}}</p>
+  </ng-template>
+</nz-modal>
 
-        </li>
-        <li (click)="confirm('exported_as_csv')" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition">
-          <span nz-icon nzType="file-text" nzTheme="outline" class="text-xl" style="color: #52c41a"></span>
-          <span class="text-gray-800 font-medium">{{'export_as_csv' | translate}}</span>
-
-
-        </li>
-      </ul>
-    </ng-template>
-  </nz-modal>
-</ng-template>
+<nz-modal [(nzVisible)]="isExportModalVisible"
+          [nzTitle]="title"
+          [nzContent]="exportContent"
+          (nzOnCancel)="handleCancelExport()"
+          (nzOnOk)="handleExport()"
+          [nzOkText]="'Okay'"
+          [nzCancelText]="'Close'">
+  <ng-template #title>
+    <h3 class="left-text text-xl">{{'export_option' | translate}}</h3>
+  </ng-template>
+  <ng-template #exportContent>
+    <ul class="space-y-1">
+      <li (click)="confirm('exported_as_pdf')"
+          class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition">
+        <span nz-icon nzType="file-pdf" nzTheme="outline" class="text-xl" style="color: #eb2f96"></span>
+        <span class="text-gray-800 font-medium">{{'export_as_pdf' | translate}}</span>
+        <span *ngIf="downloading" class="text-gray-800 font-medium -top-0.5" nz-icon nzType="loading"></span>
+      </li>
+      <li (click)="confirm('exported_as_excel')" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition">
+        <span nz-icon nzType="file-excel" nzTheme="outline" class="text-xl" style="color: #52c41a"></span>
+        <span class="text-gray-800 font-medium">{{'export_as_excel' | translate}}</span>
+      </li>
+      <li (click)="confirm('exported_as_csv')" class="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 cursor-pointer transition">
+        <span nz-icon nzType="file-text" nzTheme="outline" class="text-xl" style="color: #52c41a"></span>
+        <span class="text-gray-800 font-medium">{{'export_as_csv' | translate}}</span>
+      </li>
+    </ul>
+  </ng-template>
+</nz-modal>

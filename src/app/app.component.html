@@ -24,7 +24,7 @@
     <nz-header [class]="mobileWidth > windowSize ? 'fixed top-0 left-0 w-full z-20 shadow-md' : ''"
                class="bg-white px-4 py-2">
       <div [class]="mobileWidth > windowSize ? 'pt-2' : 'pt-5'" class="flex items-center justify-between w-full">
-        <div [class]="mobileWidth > windowSize ? 'pl-3' : 'pl-8'"
+        <div [class]="mobileWidth > windowSize ? 'pl-3' : 'pl-5'"
              class="flex items-start gap-2 flex-grow min-w-0">
           <div class="cursor-pointer text-lg left-text sm:text-lg font-semibold truncate">
             {{'power_plate' | translate}}
@@ -60,7 +60,7 @@
     @for (item of menuItems; track item; let i = $index) {
       <li (click)="isCollapsed = !isCollapsed">
         <div (mouseenter)="setHover(i)" (mouseleave)="setHover(null)" [routerLink]="item.link" routerLinkActive="active"
-             [routerLinkActiveOptions]="{ exact: true }" class="flex items-center gap-3 p-3 font">
+             [routerLinkActiveOptions]="{ exact: true }" class="flex items-center gap-3 p-2 font">
           <div [@vibrate]="hoveredIndex === i ? 'vibrating' : 'idle'" class="icon-wrapper w-6 flex justify-center">
             @if(i === 0) {
               <fa-icon [icon]="homeIcon" [ngClass]="{'text-pink-500': currentUrl === '/' || currentUrl === '/home'}" class="text-xl"></fa-icon>

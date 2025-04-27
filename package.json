@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-deploy-github-script": "ng build  && node --base-href /inflection-portal/ ./deploy-to-github.js",
+    "build-deploy-github": "ng build --base-href /inflection-portal/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -22,6 +24,7 @@
     "@fortawesome/angular-fontawesome": "^0.15.0",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@tailwindcss/postcss": "^4.1.4",
+    "fs-extra": "^11.3.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.1",
     "ng-zorro-antd": "^18.2.1",

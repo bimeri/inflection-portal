@@ -39,5 +39,6 @@
   "success_column": "Vous avez sélectionné vos colonnes avec succès 😄😄",
   "select_column": "Sélectionnez vos colonnes",
   "info": "Infos",
-  "no_column_selected": "Vous n'avez sélectionné aucune colonne 😥😢"
+  "no_column_selected": "Vous n'avez sélectionné aucune colonne 😥😢",
+  "you_selected_the_date": "Vous avez sélectionné la date:<br/> <b>{0}</b> \uD83D\uDE0E"
 }
